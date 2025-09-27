@@ -27,10 +27,10 @@
         <span class="text-xs">ABM Datos</span>
       </summary>
       <div class="ml-8 mt-1 flex flex-col space-y-1 text-xs max-h-0 overflow-hidden transition-all duration-300">
-        <a href="articles.php" class="hover:text-white"><i class="fas fa-box mr-2"></i> Artículos</a>
-        <a href="#" class="hover:text-white"><i class="fas fa-tags mr-2"></i> Categorias</a>
+        <a href="articles.php" class="hover:text-white"><i class="fas fa-box mr-2"></i> Productos</a>
+        <a href="categories.php" class="hover:text-white"><i class="fas fa-tags mr-2"></i> Categorias</a>
         <a href="#" class="hover:text-white"><i class="fas fa-user mr-2"></i> Clientes</a>
-        <a href="#" class="hover:text-white"><i class="fas fa-truck mr-2"></i> Proveedores</a>
+        <a href="#" class="hover:text-white"><i class="fas fa-truck mr-2"></i> Provs.</a>
       </div>
     </details>
 
