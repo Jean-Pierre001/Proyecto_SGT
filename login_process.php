@@ -11,18 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([':username' => $username]);
         $user = $stmt->fetch();
 
-        // NOTA: RECUERDA QUE password_verify() COMPARA LA CONTRASEÑA PLANA CON LA HASHED
-        // NO INTENTAR HACER INSERSIONES SQL DESDE PHPMYADMIN O DE LO CONTRARIO NO FUNCIONARA
         if ($user && password_verify($password, $user['password'])) {
             // Guardar datos en sesión
             $_SESSION['user_id']  = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role']     = $user['role'];
 
-            // Actualizar última conexión
-            $update = $conn->prepare("UPDATE users SET last_login = NOW() WHERE id = :id");
-            $update->execute([':id' => $user['id']]);
-
+            // Redirigir al panel principal
             header("Location: index.php");
             exit();
         } else {
@@ -39,4 +34,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: login.php");
     exit();
 }
-?>
