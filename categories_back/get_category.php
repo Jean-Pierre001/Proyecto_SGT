@@ -1,5 +1,5 @@
 <?php
-require '../includes/db.php'; // Ajusta ruta a tu conexión
+require '../includes/conn.php'; // Ajusta ruta a tu conexión
 
 header('Content-Type: application/json');
 

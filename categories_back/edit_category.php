@@ -1,5 +1,5 @@
 <?php
-require '../includes/db.php'; // Ajusta ruta a tu conexión
+require '../includes/conn.php'; // Ajusta ruta a tu conexión
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

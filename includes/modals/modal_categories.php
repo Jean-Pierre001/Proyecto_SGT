@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="editCategoryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-4 rounded-xl shadow-lg w-full max-w-md relative">
     <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Editar Categoría/Subcategoría</h2>
+    
     <form id="editCategoryForm" action="categories_back/edit_category.php" method="POST" class="grid grid-cols-1 gap-3 text-sm">
       <input type="hidden" name="id_category" id="edit_id_category">
 
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div>
         <label class="block text-gray-700 font-medium mb-1">Nombre</label>
         <input type="text" name="name" id="edit_name" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <p id="editNameError" class="text-red-600 text-xs mt-1 hidden"></p>
       </div>
 
       <!-- Descripción -->
@@ -126,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <textarea name="description" id="edit_description" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
 
-      <!-- Categoría padre (solo para subcategorías) -->
-      <div>
+      <!-- Categoría padre (solo visible para subcategorías) -->
+      <div id="edit_parent_wrapper">
         <label class="block text-gray-700 font-medium mb-1">Categoría Padre</label>
         <select name="parent_id" id="edit_parent_id" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="">-- Es categoría principal --</option>
@@ -152,25 +154,65 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 const editCategoryModal = document.getElementById('editCategoryModal');
 const cancelEditCategory = document.getElementById('cancelEditCategory');
+const editForm = document.getElementById('editCategoryForm');
+const editName = document.getElementById('edit_name');
+const editNameError = document.getElementById('editNameError');
+const editParentWrapper = document.getElementById('edit_parent_wrapper');
 
+// Abrir modal con datos
 document.querySelectorAll('.edit-category-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const id = this.dataset.id;
+  btn.addEventListener('click', function() {
+    const id = this.dataset.id;
 
-        fetch('categories_back/get_category.php?id=' + id)
-        .then(res => res.json())
-        .then(data => {
-            if(!data) return;
+    fetch('categories_back/get_category.php?id=' + id)
+    .then(res => res.json())
+    .then(data => {
+      if(!data) return;
 
-            document.getElementById('edit_id_category').value = data.id_category;
-            document.getElementById('edit_name').value = data.name;
-            document.getElementById('edit_description').value = data.description ?? '';
-            document.getElementById('edit_parent_id').value = data.parent_id ?? '';
+      document.getElementById('edit_id_category').value = data.id_category;
+      document.getElementById('edit_name').value = data.name;
+      document.getElementById('edit_description').value = data.description ?? '';
 
-            editCategoryModal.classList.remove('hidden');
-        });
+      // Si es categoría principal, ocultamos select de padre
+      if(data.parent_id === null) {
+        editParentWrapper.classList.add('hidden');
+        document.getElementById('edit_parent_id').value = "";
+      } else {
+        editParentWrapper.classList.remove('hidden');
+        document.getElementById('edit_parent_id').value = data.parent_id;
+      }
+
+      editCategoryModal.classList.remove('hidden');
     });
+  });
 });
 
+// Cerrar modal
 cancelEditCategory.addEventListener('click', () => editCategoryModal.classList.add('hidden'));
+
+// Validaciones antes de enviar
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const id = document.getElementById('edit_id_category').value;
+  const name = editName.value.trim();
+  const parentId = document.getElementById('edit_parent_id').value;
+
+  const response = await fetch('categories_back/check_edit_name.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id, name, parent_id: parentId})
+  });
+
+  const result = await response.json();
+
+  if(!result.success) {
+    editNameError.textContent = result.message;
+    editNameError.classList.remove('hidden');
+  } else {
+    editNameError.classList.add('hidden');
+    editForm.submit();
+  }
+});
 </script>
+
