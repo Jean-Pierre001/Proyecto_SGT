@@ -7,7 +7,7 @@
   <?php include 'includes/navbar.php'; ?>
 
   <!-- Main content -->
-  <main class="p-4 flex-1 bg-gray-200">
+  <main class="p-4 flex-1 bg-gray-100">
 
   </main>
 </div>

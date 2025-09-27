@@ -50,8 +50,12 @@
             <td class="px-4 py-2 border-r border-gray-300 text-gray-700">$<?= number_format($article['sale_price'], 2) ?></td>
             <td class="px-4 py-2 border-r border-gray-300 text-gray-700"><?= $article['stock'] ?></td>
             <td class="px-4 py-2 flex space-x-1">
-              <a href="edit_article.php?id=<?= $article['id_article'] ?>" class="px-2 py-1 bg-yellow-400 hover:bg-yellow-500 text-white rounded text-xs shadow-sm transition">Editar</a>
-              <a href="delete_article.php?id=<?= $article['id_article'] ?>" class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs shadow-sm transition">Eliminar</a>
+              <button class="px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition edit-modal-btn" data-id="<?= $article['id_article'] ?>">Editar</button>
+              <a href="articles_back/delete_article.php?id=<?= $article['id_article'] ?>" 
+                onclick="return confirm('¿Estás seguro que quieres eliminar este artículo?');"
+                class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs shadow-sm transition">
+                Eliminar
+              </a>
               <button class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs shadow-sm transition show-modal" data-id="<?= $article['id_article'] ?>">Mostrar</button>
             </td>
           </tr>
