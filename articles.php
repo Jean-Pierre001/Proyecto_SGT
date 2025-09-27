@@ -66,27 +66,4 @@
 <!-- Incluir modal desde includes/modals -->
 <?php include 'includes/modals/modal_articles.php'; ?>
 
-<!-- Modal -->
-<div id="articleModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-4 rounded-lg shadow-lg w-11/12 md:w-1/3 transition-transform transform scale-95">
-    <h2 class="text-lg font-bold mb-3">Detalles del Artículo</h2>
-    <div id="modalContent" class="text-gray-700 text-sm">
-      <!-- Contenido dinámico -->
-    </div>
-    <button id="closeModal" class="mt-3 bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded shadow-sm transition text-sm">Cerrar</button>
-  </div>
-</div>
 
-<script>
-  const modal = document.getElementById('articleModal');
-  const closeModal = document.getElementById('closeModal');
-
-  document.querySelectorAll('.show-modal').forEach(btn => {
-    btn.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-      document.getElementById('modalContent').innerHTML = 'Cargando detalles del artículo ID ' + btn.dataset.id;
-    });
-  });
-
-  closeModal.addEventListener('click', () => modal.classList.add('hidden'));
-</script>

@@ -9,6 +9,17 @@
   <!-- Navegación -->
   <nav class="flex flex-col space-y-2">
 
+    <!-- Inicio con estilo ABM Datos y funcionando como href -->
+    <details class="group transition-all duration-300">
+      <summary 
+        class="flex items-center px-3 py-1 cursor-pointer rounded-lg hover:bg-blue-800 list-none"
+        onclick="window.location.href='index.php';"
+      >
+        <i class="fas fa-home mr-2 text-cyan-400"></i>
+        <span class="text-xs">Inicio</span>
+      </summary>
+    </details>
+    
     <!-- ABM -->
     <details class="group transition-all duration-300">
       <summary class="flex items-center px-3 py-1 cursor-pointer rounded-lg hover:bg-blue-800">
