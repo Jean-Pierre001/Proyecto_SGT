@@ -1,50 +1,45 @@
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/sidebar.php'; ?>
 
-<div class="flex-1 flex flex-col min-h-screen ml-0 md:ml-64">
+<div class="flex-1 flex flex-col min-h-screen ml-0 md:ml-48">
+
   <!-- Navbar -->
-  <header class="navbar flex justify-between items-center px-6 py-4 shadow-sm">
-    <h1 class="text-2xl font-bold text-gray-900">Panel de Control</h1>
-    <div class="flex items-center space-x-4">
-      <span class="text-gray-900 font-medium">Hola, Admin</span>
-      <img src="https://i.pravatar.cc/150?img=3" alt="Perfil">
-    </div>
-  </header>
+  <?php include 'includes/navbar.php'; ?>
 
   <!-- Main content -->
-  <main class="p-6 flex-1">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="card p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h2 class="text-gray-500 text-sm font-medium mb-2">Ventas Mensuales</h2>
-        <p class="text-2xl font-bold text-gray-900">$25,430</p>
-        <p class="text-gray-400 text-sm mt-1">+12% respecto al mes anterior</p>
+  <main class="p-4 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="card p-4 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="text-gray-500 text-xs font-medium mb-1">Ventas Mensuales</h2>
+        <p class="text-xl font-bold text-gray-900">$25,430</p>
+        <p class="text-gray-400 text-xs mt-1">+12% respecto al mes anterior</p>
       </div>
-      <div class="card p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h2 class="text-gray-500 text-sm font-medium mb-2">Autos Vendidos</h2>
-        <p class="text-2xl font-bold text-gray-900">182</p>
-        <p class="text-gray-400 text-sm mt-1">Toyota Corolla más vendido</p>
+      <div class="card p-4 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="text-gray-500 text-xs font-medium mb-1">Autos Vendidos</h2>
+        <p class="text-xl font-bold text-gray-900">182</p>
+        <p class="text-gray-400 text-xs mt-1">Toyota Corolla más vendido</p>
       </div>
-      <div class="card p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h2 class="text-gray-500 text-sm font-medium mb-2">Clientes</h2>
-        <p class="text-2xl font-bold text-gray-900">96</p>
-        <p class="text-gray-400 text-sm mt-1">Activos +8%</p>
+      <div class="card p-4 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="text-gray-500 text-xs font-medium mb-1">Clientes</h2>
+        <p class="text-xl font-bold text-gray-900">96</p>
+        <p class="text-gray-400 text-xs mt-1">Activos +8%</p>
       </div>
-      <div class="card p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h2 class="text-gray-500 text-sm font-medium mb-2">Usuarios</h2>
-        <p class="text-2xl font-bold text-gray-900">5</p>
-        <p class="text-gray-400 text-sm mt-1">Admins:2, Editores:3</p>
+      <div class="card p-4 rounded-xl shadow hover:shadow-lg transition">
+        <h2 class="text-gray-500 text-xs font-medium mb-1">Usuarios</h2>
+        <p class="text-xl font-bold text-gray-900">5</p>
+        <p class="text-gray-400 text-xs mt-1">Admins:2, Editores:3</p>
       </div>
     </div>
 
     <!-- Gráficos -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="card p-6 rounded-xl shadow">
-        <h2 class="text-gray-700 font-semibold mb-4">Ventas Mensuales</h2>
-        <canvas id="salesChart" class="w-full h-64"></canvas>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="card p-4 rounded-xl shadow">
+        <h2 class="text-gray-700 font-semibold text-sm mb-3">Ventas Mensuales</h2>
+        <canvas id="salesChart" class="w-full h-48"></canvas>
       </div>
-      <div class="card p-6 rounded-xl shadow">
-        <h2 class="text-gray-700 font-semibold mb-4">Autos Más Vendidos</h2>
-        <canvas id="topCarsChart" class="w-full h-64"></canvas>
+      <div class="card p-4 rounded-xl shadow">
+        <h2 class="text-gray-700 font-semibold text-sm mb-3">Autos Más Vendidos</h2>
+        <canvas id="topCarsChart" class="w-full h-48"></canvas>
       </div>
     </div>
   </main>
