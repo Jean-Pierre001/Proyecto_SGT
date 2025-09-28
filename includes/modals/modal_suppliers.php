@@ -29,9 +29,27 @@
       </div>
 
       <!-- Dirección -->
-      <div class="col-span-2">
+      <div>
         <label class="block text-gray-700 font-medium mb-1">Dirección</label>
         <input type="text" name="address" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- CUIT / ID fiscal -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">CUIT / ID Fiscal</label>
+        <input type="text" name="tax_id" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Condiciones de pago -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Condiciones de Pago</label>
+        <input type="text" name="payment_terms" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Notas -->
+      <div class="col-span-2">
+        <label class="block text-gray-700 font-medium mb-1">Notas</label>
+        <textarea name="notes" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
       </div>
 
       <!-- Botones -->
@@ -83,6 +101,9 @@ const camposSupplier = {
   "phone": "Teléfono",
   "email": "Email",
   "address": "Dirección",
+  "tax_id": "CUIT / ID Fiscal",
+  "payment_terms": "Condiciones de Pago",
+  "notes": "Notas",
   "created_at": "Fecha de Creación",
   "updated_at": "Última Modificación"
 };
@@ -142,25 +163,43 @@ closeSupplierModalBtn.addEventListener('click', () => supplierModal.classList.ad
       <!-- Persona de contacto -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Persona de Contacto</label>
-        <input type="text" name="contact_name" id="edit_contact_name" class="w-full border border-gray-300 rounded px-2 py-1">
+        <input type="text" name="contact_name" id="edit_contact_name" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
       </div>
 
       <!-- Teléfono -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Teléfono</label>
-        <input type="text" name="phone" id="edit_phone" class="w-full border border-gray-300 rounded px-2 py-1">
+        <input type="text" name="phone" id="edit_phone" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
       </div>
 
       <!-- Email -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Email</label>
-        <input type="email" name="email" id="edit_email" class="w-full border border-gray-300 rounded px-2 py-1">
+        <input type="email" name="email" id="edit_email" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
       </div>
 
       <!-- Dirección -->
-      <div class="col-span-2">
+      <div>
         <label class="block text-gray-700 font-medium mb-1">Dirección</label>
-        <input type="text" name="address" id="edit_address" class="w-full border border-gray-300 rounded px-2 py-1">
+        <input type="text" name="address" id="edit_address" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- CUIT / ID fiscal -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">CUIT / ID Fiscal</label>
+        <input type="text" name="tax_id" id="edit_tax_id" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Condiciones de pago -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Condiciones de Pago</label>
+        <input type="text" name="payment_terms" id="edit_payment_terms" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Notas -->
+      <div class="col-span-2">
+        <label class="block text-gray-700 font-medium mb-1">Notas</label>
+        <textarea name="notes" id="edit_notes" class="w-full border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
       </div>
 
       <!-- Botones -->
@@ -191,6 +230,9 @@ document.querySelectorAll('.edit-supplier-btn').forEach(btn => {
         document.getElementById('edit_phone').value = data.phone ?? '';
         document.getElementById('edit_email').value = data.email ?? '';
         document.getElementById('edit_address').value = data.address ?? '';
+        document.getElementById('edit_tax_id').value = data.tax_id ?? '';
+        document.getElementById('edit_payment_terms').value = data.payment_terms ?? '';
+        document.getElementById('edit_notes').value = data.notes ?? '';
 
         editSupplierModal.classList.remove('hidden');
       });

@@ -1,16 +1,16 @@
 <?php
 include '../includes/conn.php';
 
-if (isset($_GET['id'])) {
+$id_supplier = $_GET['id'] ?? '';
+
+if($id_supplier){
     try {
-        $id = (int) $_GET['id'];
-
-        $stmt = $conn->prepare("DELETE FROM suppliers WHERE id_supplier = ?");
-        $stmt->execute([$id]);
-
-        header("Location: ../suppliers.php?msg=Proveedor eliminado correctamente");
-        exit;
-    } catch (Exception $e) {
-        die("Error al eliminar proveedor: " . $e->getMessage());
+        $stmt = $conn->prepare("DELETE FROM suppliers WHERE id_supplier=?");
+        $stmt->execute([$id_supplier]);
+        header("Location: ../suppliers.php");
+    } catch(PDOException $e) {
+        echo "Error al eliminar proveedor: " . $e->getMessage();
     }
+} else {
+    echo "ID de proveedor no válido.";
 }

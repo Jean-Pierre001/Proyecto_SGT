@@ -1,16 +1,18 @@
 <?php
 include '../includes/conn.php';
 
-if (isset($_GET['id'])) {
-    $id = (int) $_GET['id'];
+$id_supplier = $_GET['id'] ?? '';
 
-    $stmt = $conn->prepare("SELECT * FROM suppliers WHERE id_supplier = ?");
-    $stmt->execute([$id]);
-    $supplier = $stmt->fetch(PDO::FETCH_ASSOC);
+if($id_supplier){
+    try {
+        $stmt = $conn->prepare("SELECT * FROM suppliers WHERE id_supplier=?");
+        $stmt->execute([$id_supplier]);
+        $supplier = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($supplier) {
         echo json_encode($supplier);
-    } else {
+    } catch(PDOException $e) {
         echo json_encode(null);
     }
+} else {
+    echo json_encode(null);
 }
