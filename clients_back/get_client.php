@@ -1,15 +1,32 @@
 <?php
 include '../includes/conn.php';
 
-$id = $_GET['id'] ?? null;
+// Obtener ID y validar que sea entero
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
 if (!$id) {
     echo json_encode(null);
     exit;
 }
 
-$stmt = $conn->prepare("SELECT * FROM clients WHERE id_client = ?");
-$stmt->execute([$id]);
-$client = $stmt->fetch(PDO::FETCH_ASSOC);
+try {
+    $stmt = $conn->prepare("SELECT 
+        id_client, full_name, address, city, document_type, document_number, phone, mobile, cuit, status, client_type, tax_responsibility, company, contact_person, email, price_list, credit_limit, notes, created_at, updated_at
+        FROM clients 
+        WHERE id_client = ?");
+    $stmt->execute([$id]);
+    $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode($client);
+    // Si no se encuentra el cliente, devolver null
+    if (!$client) {
+        echo json_encode(null);
+        exit;
+    }
+
+    echo json_encode($client);
+
+} catch (PDOException $e) {
+    echo json_encode(null);
+    exit;
+}
 ?>

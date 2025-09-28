@@ -88,6 +88,16 @@
         <input type="text" name="price_list" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Límite de crédito</label>
+        <input type="number" step="0.01" name="credit_limit" class="w-full border border-gray-300 rounded px-2 py-1">
+      </div>
+
+      <div class="col-span-2">
+        <label class="block text-gray-700 font-medium mb-1">Observaciones</label>
+        <textarea name="notes" class="w-full border border-gray-300 rounded px-2 py-1" rows="3"></textarea>
+      </div>
+
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="closeAddClientModal" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded">Guardar</button>
@@ -105,16 +115,13 @@ document.getElementById('closeAddClientModal').addEventListener('click', () => a
 <!-- Modal para mostrar cliente -->
 <div id="clientModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-2xl shadow-2xl w-11/12 md:w-2/3 lg:w-1/2 max-h-[90vh] overflow-y-auto">
-    
     <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-2">
       <h2 class="text-2xl font-bold text-gray-800">Detalles del Cliente</h2>
       <button id="closeClientModal" class="text-gray-500 hover:text-gray-800 text-lg">&times;</button>
     </div>
-
     <div id="clientContent" class="text-gray-700 text-sm">
       <p class="text-center text-gray-400">Cargando...</p>
     </div>
-
     <div class="mt-6 flex justify-end">
       <button id="closeClientModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Cerrar</button>
     </div>
@@ -135,14 +142,16 @@ const camposClient = {
   "document_number": "Número de Documento",
   "phone": "Teléfono",
   "mobile": "Móvil",
+  "email": "Email",
   "cuit": "CUIT",
   "status": "Estado",
   "client_type": "Tipo de Cliente",
   "tax_responsibility": "Responsabilidad IVA",
   "company": "Empresa",
   "contact_person": "Persona de Contacto",
-  "email": "Email",
-  "price_list": "Lista de Precios"
+  "price_list": "Lista de Precios",
+  "credit_limit": "Límite de Crédito",
+  "notes": "Observaciones"
 };
 
 document.querySelectorAll('.show-client-modal').forEach(btn => {
@@ -275,6 +284,16 @@ closeClientModalBtn.addEventListener('click', () => clientModal.classList.add('h
         <input type="text" name="price_list" id="edit_price_list" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Límite de crédito</label>
+        <input type="number" step="0.01" name="credit_limit" id="edit_credit_limit" class="w-full border border-gray-300 rounded px-2 py-1">
+      </div>
+
+      <div class="col-span-2">
+        <label class="block text-gray-700 font-medium mb-1">Observaciones</label>
+        <textarea name="notes" id="edit_notes" class="w-full border border-gray-300 rounded px-2 py-1" rows="3"></textarea>
+      </div>
+
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="cancelEditClient" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded">Guardar</button>
@@ -290,12 +309,10 @@ const cancelEditClient = document.getElementById('cancelEditClient');
 document.querySelectorAll('.edit-client-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const id = btn.dataset.id;
-
     fetch('clients_back/get_client.php?id=' + id)
       .then(res => res.json())
       .then(data => {
         if(!data) return;
-
         document.getElementById('edit_id_client').value = data.id_client;
         document.getElementById('edit_full_name').value = data.full_name ?? '';
         document.getElementById('edit_city').value = data.city ?? '';
@@ -312,7 +329,8 @@ document.querySelectorAll('.edit-client-btn').forEach(btn => {
         document.getElementById('edit_company').value = data.company ?? '';
         document.getElementById('edit_contact_person').value = data.contact_person ?? '';
         document.getElementById('edit_price_list').value = data.price_list ?? '';
-
+        document.getElementById('edit_credit_limit').value = data.credit_limit ?? '';
+        document.getElementById('edit_notes').value = data.notes ?? '';
         editClientModal.classList.remove('hidden');
       });
   });

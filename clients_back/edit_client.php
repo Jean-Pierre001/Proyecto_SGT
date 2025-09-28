@@ -2,7 +2,8 @@
 include '../includes/conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_client = $_POST['id_client'] ?? '';
+    // Obtener y sanear datos
+    $id_client = filter_input(INPUT_POST, 'id_client', FILTER_VALIDATE_INT);
     $full_name = $_POST['full_name'] ?? '';
     $address = $_POST['address'] ?? '';
     $city = $_POST['city'] ?? '';
@@ -19,14 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $price_list = $_POST['price_list'] ?? '';
 
-    $stmt = $conn->prepare("UPDATE clients SET 
-        full_name=?, address=?, city=?, document_type=?, document_number=?, phone=?, mobile=?, cuit=?, status=?, client_type=?, tax_responsibility=?, company=?, contact_person=?, email=?, price_list=?
-        WHERE id_client=?");
+    if ($id_client) {
+        try {
+            $stmt = $conn->prepare("UPDATE clients SET 
+                full_name=?, address=?, city=?, document_type=?, document_number=?, phone=?, mobile=?, cuit=?, status=?, client_type=?, tax_responsibility=?, company=?, contact_person=?, email=?, price_list=?
+                WHERE id_client=?");
 
-    $stmt->execute([
-        $full_name, $address, $city, $document_type, $document_number, $phone, $mobile, $cuit, $status, $client_type, $tax_responsibility, $company, $contact_person, $email, $price_list, $id_client
-    ]);
-
-    header('Location: ../clients.php');
+            $stmt->execute([
+                $full_name, $address, $city, $document_type, $document_number, $phone, $mobile, $cuit, $status, $client_type, $tax_responsibility, $company, $contact_person, $email, $price_list, $id_client
+            ]);
+        } catch (PDOException $e) {
+            echo "Error al actualizar cliente: " . $e->getMessage();
+            exit;
+        }
+    }
 }
+
+header('Location: ../clients.php');
+exit;
 ?>
