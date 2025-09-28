@@ -15,8 +15,15 @@ include 'includes/sidebar.php';
       </button>
     </div>
 
+    <!-- Filtros para stock -->
+    <div class="mb-2 flex flex-wrap gap-2">
+      <input type="text" id="filterStockName" placeholder="Filtrar por Nombre" class="px-2 py-1 border rounded text-sm">
+      <input type="text" id="filterStockCategory" placeholder="Filtrar por Categoría" class="px-2 py-1 border rounded text-sm">
+      <input type="text" id="filterStockSupplier" placeholder="Filtrar por Proveedor" class="px-2 py-1 border rounded text-sm">
+    </div>
+
     <div class="overflow-x-auto rounded-lg shadow-md bg-white border border-gray-200">
-      <table class="min-w-full divide-y divide-gray-300 text-sm">
+      <table id="stockTable" class="min-w-full divide-y divide-gray-300 text-sm">
         <thead class="bg-gray-200">
           <tr>
             <th class="px-4 py-2 text-left font-semibold text-gray-700 uppercase tracking-wide border-r border-gray-300">ID</th>
@@ -54,11 +61,7 @@ include 'includes/sidebar.php';
             <td class="px-4 py-2 border-r border-gray-300 text-gray-700"><?= $stock['stock'] ?></td>
             <td class="px-4 py-2 flex space-x-1">
               <button class="px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition edit-modal-btn" data-id="<?= $stock['id_stock'] ?>">Editar</button>
-              <a href="stock_back/delete_stock.php?id=<?= $stock['id_stock'] ?>" 
-                onclick="return confirm('¿Estás seguro que quieres eliminar este Producto?');"
-                class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs shadow-sm transition">
-                Eliminar
-              </a>
+              <button class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs shadow-sm transition delete-btn" data-id="<?= $stock['id_stock'] ?>">Eliminar</button>
               <button class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs shadow-sm transition show-modal" data-id="<?= $stock['id_stock'] ?>">Mostrar</button>
             </td>
           </tr>
@@ -70,3 +73,40 @@ include 'includes/sidebar.php';
 </div>
 
 <?php include 'includes/modals/modal_stock.php'; ?>
+
+<!-- Script filtros dinámicos -->
+<script>
+function filterTable(inputId, tableId, columnIndexes) {
+  const filter = document.getElementById(inputId).value.toLowerCase();
+  const table = document.getElementById(tableId);
+  const trs = table.getElementsByTagName('tr');
+  for (let i = 1; i < trs.length; i++) {
+    let show = false;
+    columnIndexes.forEach(idx => {
+      const td = trs[i].getElementsByTagName('td')[idx];
+      if(td && td.textContent.toLowerCase().includes(filter)) show = true;
+    });
+    trs[i].style.display = show ? '' : 'none';
+  }
+}
+
+document.getElementById('filterStockName').addEventListener('input', () => filterTable('filterStockName', 'stockTable', [1]));
+document.getElementById('filterStockCategory').addEventListener('input', () => filterTable('filterStockCategory', 'stockTable', [2]));
+document.getElementById('filterStockSupplier').addEventListener('input', () => filterTable('filterStockSupplier', 'stockTable', [3]));
+
+// Script para eliminar con fetch
+document.querySelectorAll('.delete-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.id;
+    if(!confirm('¿Estás seguro que quieres eliminar este Producto?')) return;
+
+    fetch('stock_back/delete_stock.php?id=' + id)
+      .then(res => res.text())
+      .then(() => {
+        alert('Producto eliminado correctamente');
+        btn.closest('tr').remove();
+      })
+      .catch(err => alert('Error al eliminar'));
+  });
+});
+</script>
