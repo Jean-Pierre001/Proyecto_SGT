@@ -4,61 +4,51 @@
     <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Agregar Producto</h2>
     <form action="stock_back/add_stock.php" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-3 text-sm">
       
-      <!-- Nombre -->
       <div class="col-span-2">
         <label class="block text-gray-700 font-medium mb-1">Nombre</label>
         <input type="text" name="name" class="w-full border border-gray-300 rounded px-2 py-1" required>
       </div>
-      
-      <!-- Código -->
+
       <div>
         <label class="block text-gray-700 font-medium mb-1">Código</label>
         <input type="text" name="code" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Precio de compra -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Precio Compra</label>
         <input type="number" name="cost_price" step="0.01" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Precio de venta -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Precio Venta</label>
         <input type="number" name="sale_price" step="0.01" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Stock -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Stock</label>
         <input type="number" name="stock" step="0.01" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Stock mínimo -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Stock Mínimo</label>
         <input type="number" name="min_stock" step="0.01" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Marca -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Marca</label>
         <input type="text" name="brand" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- IVA -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">IVA (%)</label>
         <input type="number" name="vat" step="0.01" value="21.00" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Foto -->
       <div class="col-span-2">
         <label class="block text-gray-700 font-medium mb-1">Foto</label>
         <input type="file" name="photo" class="w-full border border-gray-300 rounded px-2 py-1">
       </div>
 
-      <!-- Categoría -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Categoría</label>
         <select name="id_category" class="w-full border border-gray-300 rounded px-2 py-1">
@@ -69,7 +59,6 @@
         </select>
       </div>
 
-      <!-- Proveedor -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Proveedor</label>
         <select name="id_supplier" class="w-full border border-gray-300 rounded px-2 py-1">
@@ -80,7 +69,6 @@
         </select>
       </div>
 
-      <!-- Botones -->
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="closeAddStockModal" class="px-3 py-1 bg-gray-500 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded">Guardar</button>
@@ -171,7 +159,6 @@ closeShowStockBtn.addEventListener('click', () => showStockModal.classList.add('
     <form id="editStockForm" action="stock_back/edit_stock.php" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-3 text-sm">
       <input type="hidden" name="id_stock" id="edit_id_stock">
 
-      <!-- Campos similares a Agregar -->
       <div class="col-span-2">
         <label>Nombre</label>
         <input type="text" name="name" id="edit_name" class="w-full border rounded px-2 py-1" required>
@@ -228,7 +215,6 @@ closeShowStockBtn.addEventListener('click', () => showStockModal.classList.add('
         </select>
       </div>
 
-      <!-- Botones -->
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="closeEditStockModal" class="px-3 py-1 bg-gray-500 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded">Guardar</button>
