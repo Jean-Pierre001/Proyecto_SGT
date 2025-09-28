@@ -31,11 +31,7 @@
 </head>
 <body class="flex">
 
-  <!-- Scripts JS al final para no bloquear -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
-          integrity="sha512-3gJwYp6NTC6rO0HRfR7wIipKnVYUp6e3kKf8gE9hF9W7tGQfLGU2wB1lU2Iu5kuOEXfFvP5KkHeXyoP7Vd5xjQ==" 
-          crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>

@@ -41,7 +41,7 @@
         <span class="text-xs">Clientes</span>
       </summary>
       <div class="ml-8 mt-1 flex flex-col space-y-1 text-xs max-h-0 overflow-hidden transition-all duration-300">
-        <a href="#" class="hover:text-white"><i class="fas fa-cart-plus mr-2"></i> Ventas</a>
+        <a href="sales.php" class="hover:text-white"><i class="fas fa-cart-plus mr-2"></i> Ventas</a>
         <a href="#" class="hover:text-white"><i class="fas fa-undo-alt mr-2"></i> Devolución</a>
         <a href="#" class="hover:text-white"><i class="fas fa-hand-holding-usd mr-2"></i> Cobranza</a>
         <a href="#" class="hover:text-white"><i class="fas fa-balance-scale mr-2"></i> Saldos</a>
