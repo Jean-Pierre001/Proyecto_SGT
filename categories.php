@@ -3,15 +3,21 @@ include 'includes/header.php';
 include 'includes/conn.php'; 
 include 'includes/sidebar.php';
 
-// Obtener categorías principales y subcategorías
-$stmt_main = $conn->query("SELECT * FROM categories WHERE parent_id IS NULL ORDER BY name");
+// Obtener categorías principales (sin parent_id)
+$stmt_main = $conn->query("SELECT id_category, name, description, created_at, updated_at 
+                           FROM categories 
+                           WHERE parent_id IS NULL 
+                           ORDER BY name");
 $mainCats = $stmt_main->fetchAll(PDO::FETCH_ASSOC);
 
 $mainIds = array_column($mainCats, 'id_category');
 $subCats = [];
 if(count($mainIds) > 0){
     $inQuery = implode(',', array_fill(0, count($mainIds), '?'));
-    $stmt = $conn->prepare("SELECT * FROM categories WHERE parent_id IN ($inQuery) ORDER BY name");
+    $stmt = $conn->prepare("SELECT id_category, name, description, parent_id, created_at, updated_at 
+                            FROM categories 
+                            WHERE parent_id IN ($inQuery) 
+                            ORDER BY name");
     $stmt->execute($mainIds);
     $allSubs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach($allSubs as $sub){
@@ -49,7 +55,13 @@ if(count($mainIds) > 0){
       <?php foreach($mainCats as $index => $cat): ?>
       <div class="category-card bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
           <div class="flex justify-between items-center px-5 py-3 bg-indigo-100">
-              <h2 class="text-gray-900 font-semibold text-base category-name"><?= htmlspecialchars($cat['name']) ?></h2>
+              <div>
+                <h2 class="text-gray-900 font-semibold text-base category-name"><?= htmlspecialchars($cat['name']) ?></h2>
+                <?php if(!empty($cat['description'])): ?>
+                  <p class="text-gray-700 text-sm"><?= htmlspecialchars($cat['description']) ?></p>
+                <?php endif; ?>
+                <p class="text-gray-500 text-xs">Creado: <?= $cat['created_at'] ?><?= $cat['updated_at'] ? " | Modificado: ".$cat['updated_at'] : "" ?></p>
+              </div>
               <div class="flex space-x-2">
                 <a href="#" class="edit-category-btn px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition"
                   data-id="<?= $cat['id_category'] ?>">Editar</a>
@@ -66,7 +78,10 @@ if(count($mainIds) > 0){
               <div class="px-8 py-2 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition subcategory-card">
                   <div>
                     <p class="text-gray-800 font-medium sub-name">— <?= htmlspecialchars($sub['name']) ?></p>
-                    <p class="text-gray-600 text-sm sub-desc"><?= htmlspecialchars($sub['description']) ?></p>
+                    <?php if(!empty($sub['description'])): ?>
+                      <p class="text-gray-600 text-sm sub-desc"><?= htmlspecialchars($sub['description']) ?></p>
+                    <?php endif; ?>
+                    <p class="text-gray-500 text-xs">Creado: <?= $sub['created_at'] ?><?= $sub['updated_at'] ? " | Modificado: ".$sub['updated_at'] : "" ?></p>
                   </div>
                   <div class="flex space-x-2">
                     <a href="#" class="edit-category-btn px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition"
@@ -130,7 +145,7 @@ function filterCategories() {
 
         subs.forEach(sub => {
             const subName = sub.querySelector('.sub-name').textContent.replace('—','').trim().toLowerCase();
-            const subDesc = sub.querySelector('.sub-desc').textContent.toLowerCase();
+            const subDesc = sub.querySelector('.sub-desc') ? sub.querySelector('.sub-desc').textContent.toLowerCase() : "";
 
             // Filtra subcategorías solo dentro de categorías visibles
             const showSub = showCatByName && 
@@ -150,6 +165,4 @@ function filterCategories() {
 document.getElementById('filterCategoryName').addEventListener('input', filterCategories);
 document.getElementById('filterSubName').addEventListener('input', filterCategories);
 document.getElementById('filterDescription').addEventListener('input', filterCategories);
-
 </script>
-

@@ -5,14 +5,25 @@
   <div class="bg-white p-4 rounded-xl shadow-lg w-full max-w-2xl relative">
     <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Agregar Nueva Categoría</h2>
     <form id="addCategoryForm" action="categories_back/add_category.php" method="POST" class="grid grid-cols-2 gap-3 text-sm">
+      <!-- Nombre -->
       <div class="col-span-2">
         <label class="block text-gray-700 font-medium mb-1">Nombre</label>
         <input type="text" id="categoryName" name="name" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
+      <!-- Descripción -->
       <div class="col-span-2">
         <label class="block text-gray-700 font-medium mb-1">Descripción</label>
         <textarea name="description" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
+      <!-- Estado -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Estado</label>
+        <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="activo" selected>Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <!-- Botones -->
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="closeAddCategoryModal" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded">Guardar</button>
@@ -26,6 +37,7 @@
   <div class="bg-white p-4 rounded-xl shadow-lg w-full max-w-2xl relative">
     <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Crear Subcategoría</h2>
     <form id="addSubCategoryForm" action="categories_back/add_subcategory.php" method="POST" class="grid grid-cols-2 gap-3 text-sm">
+      <!-- Categoría principal -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Categoría Principal</label>
         <select name="parent_id" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -35,14 +47,25 @@
           <?php endforeach; ?>
         </select>
       </div>
+      <!-- Nombre -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Nombre</label>
         <input type="text" id="subCatName" name="name" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
+      <!-- Descripción -->
       <div class="col-span-2">
         <label class="block text-gray-700 font-medium mb-1">Descripción</label>
         <textarea name="description" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
+      <!-- Estado -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Estado</label>
+        <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="activo" selected>Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <!-- Botones -->
       <div class="col-span-2 flex justify-end space-x-2 mt-3">
         <button type="button" id="closeAddSubCategoryModal" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded">Cancelar</button>
         <button type="submit" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded">Guardar</button>
@@ -53,61 +76,42 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Abrir/Cerrar modales
   const addCategoryModal = document.getElementById('addCategoryModal');
   const addSubCategoryModal = document.getElementById('addSubCategoryModal');
 
+  // Abrir/Cerrar modales
   document.getElementById('openAddCategoryModal').addEventListener('click', () => addCategoryModal.classList.remove('hidden'));
   document.getElementById('closeAddCategoryModal').addEventListener('click', () => addCategoryModal.classList.add('hidden'));
   document.getElementById('openAddSubCategoryModal').addEventListener('click', () => addSubCategoryModal.classList.remove('hidden'));
   document.getElementById('closeAddSubCategoryModal').addEventListener('click', () => addSubCategoryModal.classList.add('hidden'));
 
-  // Listas de nombres existentes
-  const categoryNames = [
-    <?php foreach($mainCats as $cat) { echo "'" . addslashes($cat['name']) . "',"; } ?>
-  ];
+  // Validaciones duplicados
+  const categoryNames = [<?php foreach($mainCats as $cat) { echo "'" . addslashes($cat['name']) . "',"; } ?>];
+  const subCategoryNames = [<?php foreach($subCats as $subs) { foreach($subs as $sub) { echo "'" . addslashes($sub['name']) . "',"; } } ?>];
 
-  const subCategoryNames = [
-    <?php foreach($subCats as $subs) { foreach($subs as $sub) { echo "'" . addslashes($sub['name']) . "',"; } } ?>
-  ];
-
-  // Validar Categoría
   const addCategoryForm = document.getElementById('addCategoryForm');
   const categoryNameInput = document.getElementById('categoryName');
-
   addCategoryForm.addEventListener('submit', function(e) {
     const name = categoryNameInput.value.trim();
     if(categoryNames.includes(name)) {
       e.preventDefault();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Nombre duplicado',
-        text: 'Ya existe una categoría con este nombre. Cambialo para continuar.',
-        confirmButtonText: 'Ok'
-      });
+      Swal.fire({icon:'warning',title:'Nombre duplicado',text:'Ya existe una categoría con este nombre.'});
     }
   });
 
-  // Validar Subcategoría
   const addSubCategoryForm = document.getElementById('addSubCategoryForm');
   const subCatNameInput = document.getElementById('subCatName');
-
   addSubCategoryForm.addEventListener('submit', function(e) {
     const name = subCatNameInput.value.trim();
     if(categoryNames.includes(name) || subCategoryNames.includes(name)) {
       e.preventDefault();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Nombre duplicado',
-        text: 'La subcategoría no puede tener el mismo nombre que una categoría o subcategoría existente.',
-        confirmButtonText: 'Ok'
-      });
+      Swal.fire({icon:'warning',title:'Nombre duplicado',text:'La subcategoría ya existe con ese nombre.'});
     }
   });
 });
 </script>
 
-<!-- Modal para editar categoría/subcategoría -->
+<!-- Modal Editar Categoría/Subcategoría -->
 <div id="editCategoryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-4 rounded-xl shadow-lg w-full max-w-md relative">
     <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Editar Categoría/Subcategoría</h2>
@@ -128,7 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <textarea name="description" id="edit_description" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
 
-      <!-- Categoría padre (solo visible para subcategorías) -->
+      <!-- Estado -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Estado</label>
+        <select name="status" id="edit_status" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+
+      <!-- Categoría padre -->
       <div id="edit_parent_wrapper">
         <label class="block text-gray-700 font-medium mb-1">Categoría Padre</label>
         <select name="parent_id" id="edit_parent_id" class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -159,21 +172,18 @@ const editName = document.getElementById('edit_name');
 const editNameError = document.getElementById('editNameError');
 const editParentWrapper = document.getElementById('edit_parent_wrapper');
 
-// Abrir modal con datos
 document.querySelectorAll('.edit-category-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     const id = this.dataset.id;
-
     fetch('categories_back/get_category.php?id=' + id)
     .then(res => res.json())
     .then(data => {
       if(!data) return;
-
       document.getElementById('edit_id_category').value = data.id_category;
       document.getElementById('edit_name').value = data.name;
       document.getElementById('edit_description').value = data.description ?? '';
+      document.getElementById('edit_status').value = data.status ?? 'activo';
 
-      // Si es categoría principal, ocultamos select de padre
       if(data.parent_id === null) {
         editParentWrapper.classList.add('hidden');
         document.getElementById('edit_parent_id').value = "";
@@ -181,31 +191,24 @@ document.querySelectorAll('.edit-category-btn').forEach(btn => {
         editParentWrapper.classList.remove('hidden');
         document.getElementById('edit_parent_id').value = data.parent_id;
       }
-
       editCategoryModal.classList.remove('hidden');
     });
   });
 });
 
-// Cerrar modal
 cancelEditCategory.addEventListener('click', () => editCategoryModal.classList.add('hidden'));
 
-// Validaciones antes de enviar
 editForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const id = document.getElementById('edit_id_category').value;
   const name = editName.value.trim();
   const parentId = document.getElementById('edit_parent_id').value;
-
   const response = await fetch('categories_back/check_edit_name.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({id, name, parent_id: parentId})
   });
-
   const result = await response.json();
-
   if(!result.success) {
     editNameError.textContent = result.message;
     editNameError.classList.remove('hidden');
@@ -215,4 +218,3 @@ editForm.addEventListener('submit', async (e) => {
   }
 });
 </script>
-

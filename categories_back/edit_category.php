@@ -1,5 +1,5 @@
 <?php
-require '../includes/conn.php'; // Ajusta ruta a tu conexión
+require '../includes/conn.php'; 
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // 🚨 Validación: no permitir que el nombre ya exista en otra categoría (excepto la misma)
-        $check = $conn->prepare("SELECT id_category FROM categories WHERE name = ? AND id_category != ?");
+        $check = $conn->prepare("SELECT id_category FROM categories WHERE category_name = ? AND id_category != ?");
         $check->execute([$name, $id]);
 
         if ($check->fetch()) {
@@ -26,10 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Actualizar
+        // ✅ Actualizar categoría
         $stmt = $conn->prepare("
             UPDATE categories
-            SET name = ?, description = ?, parent_id = ?, updated_at = NOW()
+            SET category_name = ?, 
+                category_description = ?, 
+                parent_id = ?, 
+                updated_at = NOW()
             WHERE id_category = ?
         ");
 

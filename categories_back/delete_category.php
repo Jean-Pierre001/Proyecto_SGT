@@ -1,8 +1,8 @@
 <?php
 include '../includes/conn.php';
 
-if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
-    header('Location: ../categories.php');
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    header('Location: ../categories.php?error=ID inválido');
     exit;
 }
 
@@ -11,7 +11,7 @@ $id = (int)$_GET['id'];
 try {
     $conn->beginTransaction();
 
-    // 1️⃣ Eliminar subcategorías (si existen)
+    // 1️⃣ Eliminar subcategorías relacionadas (si existen)
     $stmt = $conn->prepare("DELETE FROM categories WHERE parent_id = :id");
     $stmt->execute([':id' => $id]);
 
@@ -20,12 +20,13 @@ try {
     $stmt->execute([':id' => $id]);
 
     $conn->commit();
-    header('Location: ../categories.php?msg=deleted');
+
+    header('Location: ../categories.php?success=Categoría eliminada correctamente');
     exit;
-} catch(PDOException $e){
+} catch (PDOException $e) {
     $conn->rollBack();
+
     // Redirigir con error
-    header('Location: ../categories.php?msg=error');
+    header('Location: ../categories.php?error=Error al eliminar categoría');
     exit;
 }
-?>

@@ -2,21 +2,27 @@
 include '../includes/conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $parent_id = intval($_POST['parent_id'] ?? 0);
-    $name = trim($_POST['name'] ?? '');
-    $description = trim($_POST['description'] ?? '');
+    // Recibir y limpiar datos
+    $parentId = isset($_POST['parent_id']) ? (int)$_POST['parent_id'] : 0;
+    $categoryName = trim($_POST['category_name'] ?? '');
+    $categoryDescription = trim($_POST['category_description'] ?? '');
 
-    if ($parent_id <= 0 || $name === '') {
-        header("Location: ../categories.php?error=Todos los campos son obligatorios");
+    // Validación
+    if ($parentId <= 0 || $categoryName === '') {
+        header("Location: ../categories.php?error=El nombre y el padre son obligatorios");
         exit;
     }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO categories (name, description, parent_id) VALUES (:name, :description, :parent_id)");
+        // Insertar subcategoría
+        $stmt = $conn->prepare("
+            INSERT INTO categories (category_name, category_description, parent_id, created_at, updated_at)
+            VALUES (:category_name, :category_description, :parent_id, NOW(), NOW())
+        ");
         $stmt->execute([
-            ':name' => $name,
-            ':description' => $description,
-            ':parent_id' => $parent_id
+            ':category_name' => $categoryName,
+            ':category_description' => $categoryDescription,
+            ':parent_id' => $parentId
         ]);
 
         header("Location: ../categories.php?success=Subcategoría creada correctamente");
