@@ -72,7 +72,7 @@
       </summary>
       <div class="ml-8 mt-1 flex flex-col space-y-1 text-xs max-h-0 overflow-hidden transition-all duration-300">
         <a href="#" class="hover:text-white"><i class="fas fa-sign-out-alt mr-2"></i> Salidas</a>
-        <a href="#" class="hover:text-white"><i class="fas fa-warehouse mr-2"></i> Stock</a>
+        <a href="stock.php" class="hover:text-white"><i class="fas fa-warehouse mr-2"></i> Stock</a>
         <a href="#" class="hover:text-white"><i class="fas fa-sync-alt mr-2"></i> A Reponer</a>
       </div>
     </details>

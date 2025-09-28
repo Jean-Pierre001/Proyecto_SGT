@@ -114,28 +114,35 @@ document.querySelectorAll('.delete-btn').forEach(btn => {
     });
 });
 
-// Función de filtrado dinámico
 function filterCategories() {
-    const nameFilter = document.getElementById('filterCategoryName').value.toLowerCase();
-    const subFilter = document.getElementById('filterSubName').value.toLowerCase();
-    const descFilter = document.getElementById('filterDescription').value.toLowerCase();
+    const nameFilter = document.getElementById('filterCategoryName').value.toLowerCase().trim();
+    const subFilter = document.getElementById('filterSubName').value.toLowerCase().trim();
+    const descFilter = document.getElementById('filterDescription').value.toLowerCase().trim();
 
     document.querySelectorAll('.category-card').forEach(cat => {
         const catName = cat.querySelector('.category-name').textContent.toLowerCase();
-        let showCat = catName.includes(nameFilter);
+
+        // Filtra categoría padre: solo mostrar si coincide con el filtro de nombre
+        const showCatByName = !nameFilter ? true : catName.split(' ').some(word => word.startsWith(nameFilter));
 
         let anySubVisible = false;
         const subs = cat.querySelectorAll('.subcategory-card');
+
         subs.forEach(sub => {
-            const subName = sub.querySelector('.sub-name').textContent.replace('—', '').trim().toLowerCase();
+            const subName = sub.querySelector('.sub-name').textContent.replace('—','').trim().toLowerCase();
             const subDesc = sub.querySelector('.sub-desc').textContent.toLowerCase();
-            const showSub = subName.includes(subFilter) && subDesc.includes(descFilter);
+
+            // Filtra subcategorías solo dentro de categorías visibles
+            const showSub = showCatByName && 
+                            (!subFilter || subName.split(' ').some(word => word.startsWith(subFilter))) &&
+                            (!descFilter || subDesc.split(' ').some(word => word.startsWith(descFilter)));
+
             sub.style.display = showSub ? '' : 'none';
-            if (showSub) anySubVisible = true;
+            if(showSub) anySubVisible = true;
         });
 
-        // Mostrar la categoría si coincide ella o alguna subcategoría es visible
-        cat.style.display = (showCat || anySubVisible) ? '' : 'none';
+        // Mostrar categoría si coincide ella o si alguna subcategoría dentro coincide
+        cat.style.display = (showCatByName && (anySubVisible || subs.length === 0)) ? '' : 'none';
     });
 }
 
@@ -143,5 +150,6 @@ function filterCategories() {
 document.getElementById('filterCategoryName').addEventListener('input', filterCategories);
 document.getElementById('filterSubName').addEventListener('input', filterCategories);
 document.getElementById('filterDescription').addEventListener('input', filterCategories);
+
 </script>
 

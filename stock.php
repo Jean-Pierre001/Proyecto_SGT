@@ -1,17 +1,17 @@
-<?php include 'includes/header.php'; ?>
-<?php include 'includes/conn.php'; ?>
-<?php include 'includes/sidebar.php'; ?>
+<?php 
+include 'includes/header.php'; 
+include 'includes/conn.php'; 
+include 'includes/sidebar.php'; 
+?>
 
 <div class="flex-1 flex flex-col min-h-screen ml-0 md:ml-48">
-
   <?php include 'includes/navbar.php'; ?>
 
   <main class="p-4 flex-1 bg-gray-100">
-
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-xl font-bold text-gray-800">Artículos</h1>
+      <h1 class="text-xl font-bold text-gray-800">Productos</h1>
       <button id="openAddModal" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded shadow hover:shadow-md text-sm">
-         Agregar Artículo
+        Agregar Producto
       </button>
     </div>
 
@@ -31,43 +31,42 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <?php
             $stmt = $conn->query("
-              SELECT a.id_article, a.name, a.sale_price, a.stock, 
-                     c.name AS category_name, s.name AS supplier_name
-              FROM articles a
+              SELECT a.id_stock, a.name, 
+                     COALESCE(a.sale_price, 0) AS sale_price, 
+                     COALESCE(a.stock, 0) AS stock, 
+                     c.name AS category_name, 
+                     s.name AS supplier_name
+              FROM stock a
               LEFT JOIN categories c ON a.id_category = c.id_category
               LEFT JOIN suppliers s ON a.id_supplier = s.id_supplier
-              ORDER BY a.id_article DESC
+              ORDER BY a.id_stock DESC
             ");
-            $articles = $stmt->fetchAll();
+            $stocks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach($articles as $index => $article):
+            foreach($stocks as $index => $stock):
           ?>
           <tr class="<?= $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' ?> hover:bg-gray-100 transition">
-            <td class="px-4 py-2 border-r border-gray-300"><?= htmlspecialchars($article['id_article']) ?></td>
-            <td class="px-4 py-2 border-r border-gray-300 font-medium text-gray-800"><?= htmlspecialchars($article['name']) ?></td>
-            <td class="px-4 py-2 border-r border-gray-300 text-gray-600"><?= htmlspecialchars($article['category_name']) ?></td>
-            <td class="px-4 py-2 border-r border-gray-300 text-gray-600"><?= htmlspecialchars($article['supplier_name']) ?></td>
-            <td class="px-4 py-2 border-r border-gray-300 text-gray-700">$<?= number_format($article['sale_price'], 2) ?></td>
-            <td class="px-4 py-2 border-r border-gray-300 text-gray-700"><?= $article['stock'] ?></td>
+            <td class="px-4 py-2 border-r border-gray-300"><?= htmlspecialchars($stock['id_stock']) ?></td>
+            <td class="px-4 py-2 border-r border-gray-300 font-medium text-gray-800"><?= htmlspecialchars($stock['name']) ?></td>
+            <td class="px-4 py-2 border-r border-gray-300 text-gray-600"><?= htmlspecialchars($stock['category_name'] ?? '') ?></td>
+            <td class="px-4 py-2 border-r border-gray-300 text-gray-600"><?= htmlspecialchars($stock['supplier_name'] ?? '') ?></td>
+            <td class="px-4 py-2 border-r border-gray-300 text-gray-700">$<?= number_format($stock['sale_price'], 2) ?></td>
+            <td class="px-4 py-2 border-r border-gray-300 text-gray-700"><?= $stock['stock'] ?></td>
             <td class="px-4 py-2 flex space-x-1">
-              <button class="px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition edit-modal-btn" data-id="<?= $article['id_article'] ?>">Editar</button>
-              <a href="articles_back/delete_article.php?id=<?= $article['id_article'] ?>" 
-                onclick="return confirm('¿Estás seguro que quieres eliminar este artículo?');"
+              <button class="px-2 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs shadow-sm transition edit-modal-btn" data-id="<?= $stock['id_stock'] ?>">Editar</button>
+              <a href="stock_back/delete_stock.php?id=<?= $stock['id_stock'] ?>" 
+                onclick="return confirm('¿Estás seguro que quieres eliminar este Producto?');"
                 class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs shadow-sm transition">
                 Eliminar
               </a>
-              <button class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs shadow-sm transition show-modal" data-id="<?= $article['id_article'] ?>">Mostrar</button>
+              <button class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs shadow-sm transition show-modal" data-id="<?= $stock['id_stock'] ?>">Mostrar</button>
             </td>
           </tr>
           <?php endforeach; ?>
         </tbody>
       </table>
     </div>
-
   </main>
 </div>
 
-<!-- Incluir modal desde includes/modals -->
-<?php include 'includes/modals/modal_articles.php'; ?>
-
-
+<?php include 'includes/modals/modal_stock.php'; ?>
