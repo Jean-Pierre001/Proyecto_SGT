@@ -6,7 +6,6 @@ session_start();
 require 'includes/conn.php';
 
 $error = '';
-$recaptcha_secret = '6LeMw_8rAAAAACFUqMkEVe20G8xyBxVg5Zx8V5Su';
 
 // ✅ Si viene expulsado del sistema por estar inactivo, lo detectamos
 $getError = $_GET['error'] ?? '';
@@ -15,16 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = htmlspecialchars(trim($_POST['email'] ?? ''));
     $password = $_POST['password'] ?? '';
     $recaptcha_token = $_POST['recaptcha_token'] ?? '';
-
-    if (!empty($recaptcha_token)) {
-        $recaptcha_response = file_get_contents(
-            "https://www.google.com/recaptcha/api/siteverify?secret={$recaptcha_secret}&response={$recaptcha_token}"
-        );
-        $recaptcha_data = json_decode($recaptcha_response, true);
-        if (!$recaptcha_data['success'] || $recaptcha_data['score'] < 0.5) {
-            $error = "reCAPTCHA no verificado, riesgo alto detectado.";
-        }
-    }
 
     if ($error === '') {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -157,25 +146,26 @@ body, html {
       <input type="email" id="email" name="email" class="form-control" required autofocus>
     </div>
 
-    <div class="mb-3">
-      <label for="password" class="form-label"><i class="fa-solid fa-lock me-2"></i>Contraseña</label>
-      <input type="password" id="password" name="password" class="form-control" required>
-    </div>
+    <div class="mb-3 position-relative">
+      <label for="password" class="form-label">
+        <i class="fa-solid fa-lock me-2"></i>Contraseña
+      </label>
 
-    <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+      <div class="input-group">
+          <input type="password" id="password" name="password" class="form-control" required>
+
+          <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+              <i class="fa-solid fa-eye"></i>
+          </button>
+      </div>
+
+    </div>
 
     <button type="submit" class="btn btn-primary w-100">Ingresar</button>
   </form>
 </div>
 
-<script src="https://www.google.com/recaptcha/api.js?render=6LeMw_8rAAAAAE-sAqzejAJCm1xPKPaExE84JtxK"></script>
 <script>
-grecaptcha.ready(function() {
-    grecaptcha.execute('6LeMw_8rAAAAAE-sAqzejAJCm1xPKPaExE84JtxK', {action: 'login'}).then(function(token) {
-        document.getElementById('recaptcha_token').value = token;
-    });
-});
-
 // ✅ Mostrar SweetAlert si hay error PHP
 <?php if ($error): ?>
 Swal.fire({
@@ -198,5 +188,23 @@ Swal.fire({
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password');
+    const icon = this.querySelector('i');
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = "password";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+</script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 // Conexión a la Base de Datos con PDO
 
 $host = "localhost";       
-$dbname = "sistema_escolar"; 
+$dbname = "sgt"; 
 $username = "root";        
 $password = "";            
 

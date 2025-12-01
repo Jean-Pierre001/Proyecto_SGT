@@ -205,9 +205,10 @@ try {
     document.getElementById('edit_last_name').value = user.last_name;
     document.getElementById('edit_email').value = user.email;
     document.getElementById('edit_password').value = '';
-    document.getElementById('edit_role').value = user.role;
+    document.getElementById('edit_role').value = user.role_id;
     openModal('editUserModal');
   }
+
 
   // Validación duplicados emails
   async function checkDuplicateEmail(email, excludeId = null){

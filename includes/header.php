@@ -8,12 +8,6 @@
       ? htmlspecialchars($page_title) . ' | SIA'
       : 'SIA - Panel de Administración'; ?>
   </title>
-
-  <!-- FullCalendar CSS -->
-  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
-
-  <!-- FullCalendar JS -->
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +58,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="icon" type="despuesponerimagen" href="assets\img\android-chrome-512x512.png">
 
   <!-- Estilos base personalizados -->
   <style>

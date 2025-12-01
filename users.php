@@ -66,10 +66,18 @@ include 'includes/conn.php';
                     <tbody>
                         <?php
                         try {
-                            $sql = "SELECT u.user_id, u.first_name, u.last_name, u.email, u.status, r.name AS role_name
-                                    FROM users u
-                                    LEFT JOIN roles r ON u.role_id = r.role_id
-                                    ORDER BY u.user_id ASC";
+                            $sql = "SELECT 
+                                u.user_id, 
+                                u.first_name, 
+                                u.last_name, 
+                                u.email, 
+                                u.status, 
+                                u.role_id,         
+                                r.name AS role_name
+                            FROM users u
+                            LEFT JOIN roles r ON u.role_id = r.role_id
+                            ORDER BY u.user_id ASC";
+
                             $stmt = $conn->query($sql);
                             $users = $stmt->fetchAll();
 
@@ -88,10 +96,12 @@ include 'includes/conn.php';
                                         </span>
                                         </td>
                                         <td class="px-6 py-3 text-center flex flex-wrap justify-center gap-2">
-                                            <a href="javascript:void(0)" onclick='openEditModalUser(<?= json_encode($user); ?>)' 
-                                               class="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md transition w-28">
+                                            <a href="javascript:void(0)" 
+                                                onclick='openEditModalUser(<?= json_encode($user); ?>)' 
+                                                class="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md transition w-28">
                                                 <i class="fa-solid fa-pen mr-1"></i>Editar
                                             </a>
+
                                             <a href="users_back/delete_user.php?id=<?= $user['user_id']; ?>" 
                                                class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md transition w-28"
                                                onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
@@ -167,9 +177,11 @@ Swal.fire({
 <?php endif; ?>
 </script>
 
-<!-- Filtros dinámicos persistentes -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    const PAGE_KEY = "users_";
+
     const filters = {
         name: document.getElementById('filterName'),
         lastName: document.getElementById('filterLastName'),
@@ -177,10 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     const rows = document.querySelectorAll('#usersTable tbody tr');
 
-    // Cargar valores guardados
+    // Cargar valores guardados solo para esta página
     Object.keys(filters).forEach(key => {
-        const saved = localStorage.getItem('filter_' + key);
-        if(saved !== null) filters[key].value = saved;
+        const saved = localStorage.getItem(PAGE_KEY + 'filter_' + key);
+        if (saved !== null) filters[key].value = saved;
     });
 
     function filterRows() {
@@ -192,17 +204,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         rows.forEach(row => {
             const cells = row.children;
-            const show = 
+            const show =
                 cells[0].textContent.toLowerCase().includes(vals.name) &&
                 cells[1].textContent.toLowerCase().includes(vals.lastName) &&
                 (vals.role === '' || cells[3].textContent.toLowerCase().includes(vals.role));
+
             row.style.display = show ? '' : 'none';
         });
     }
 
     Object.keys(filters).forEach(key => {
         filters[key].addEventListener(key === 'role' ? 'change' : 'input', () => {
-            localStorage.setItem('filter_' + key, filters[key].value);
+            localStorage.setItem(PAGE_KEY + 'filter_' + key, filters[key].value);
             filterRows();
         });
     });
@@ -210,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.clearFilters = function() {
         Object.keys(filters).forEach(key => {
             filters[key].value = '';
-            localStorage.removeItem('filter_' + key);
+            localStorage.removeItem(PAGE_KEY + 'filter_' + key);
         });
         filterRows();
     };
