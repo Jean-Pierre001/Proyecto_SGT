@@ -2,10 +2,10 @@
 // includes/conn.php
 // Conexión a la Base de Datos con PDO
 
-$host = "localhost";       
-$dbname = "sistema_escolar"; 
-$username = "root";        
-$password = "";            
+$host = "sql306.infinityfree.com";       
+$dbname = "if0_40067456_sistema_escolar"; 
+$username = "if0_40067456";        
+$password = "CpBSUZhrZ2m";            
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
