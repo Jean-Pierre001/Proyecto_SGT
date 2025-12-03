@@ -58,7 +58,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Favicon -->
-  <link rel="icon" type="despuesponerimagen" href="assets\img\android-chrome-512x512.png">
+  <link rel="icon" type="image/png" href="assets/img/android-chrome-512x512.png">
 
   <!-- Estilos base personalizados -->
   <style>

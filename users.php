@@ -155,6 +155,9 @@ include 'includes/conn.php';
         <!-- Modales -->
         <?php include 'includes/modals/modals_users.php'; ?>
 
+        <!-- Footer -->
+        <?php include 'includes/footer.php'; ?>
+
     </main>
 </div>
 
@@ -231,5 +234,3 @@ document.addEventListener('DOMContentLoaded', function() {
     filterRows();
 });
 </script>
-
-<?php include 'includes/footer.php'; ?>

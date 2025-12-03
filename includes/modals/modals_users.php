@@ -105,99 +105,14 @@ try {
   </div>
 </div>
 
-<!-- Modal Gestionar Cursos del Usuario -->
-<div id="userCoursesModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-auto">
-  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-3xl relative animate-fade-in max-h-[90vh] flex flex-col">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center md:text-left" id="userCoursesTitle">Gestionar Cursos</h2>
-
-    <!-- Formulario Agregar Curso -->
-    <form id="addUserCourseForm" class="mb-4 flex flex-col md:flex-row gap-3 flex-wrap">
-      <input type="hidden" name="user_id" id="courseUserId">
-      <select name="course_id" id="selectCourse" class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-          <option value="">Seleccionar Curso</option>
-          <?php
-          $coursesStmt = $conn->query("SELECT course_id, name FROM courses ORDER BY name ASC");
-          $allCourses = $coursesStmt->fetchAll();
-          foreach($allCourses as $course){
-              echo "<option value='{$course['course_id']}'>{$course['name']}</option>";
-          }
-          ?>
-      </select>
-      <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full md:w-auto">Agregar</button>
-    </form>
-
-    <!-- Tabla de Cursos con scroll vertical -->
-    <div class="overflow-y-auto overflow-x-auto rounded-lg border border-gray-200 flex-1">
-      <table class="min-w-full border-collapse" id="userCoursesTable">
-        <thead class="bg-gradient-to-r from-blue-500 to-blue-700 text-white sticky top-0">
-          <tr>
-            <th class="px-4 py-3 text-left font-medium uppercase text-sm md:text-base">Curso</th>
-            <th class="px-4 py-3 text-left font-medium uppercase text-sm md:text-base">Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="userCoursesTableBody"></tbody>
-      </table>
-    </div>
-
-    <div class="flex justify-end mt-4">
-      <button type="button" onclick="closeModal('userCoursesModal')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 w-full md:w-auto">Cerrar</button>
-    </div>
-  </div>
-</div>
-
 <script>
-  function openUserCoursesModal(userId, userName) {
-      document.getElementById('courseUserId').value = userId;
-      document.getElementById('userCoursesTitle').innerText = "Gestionar Cursos de " + userName;
-      openModal('userCoursesModal');
-      loadUserCourses(userId);
+  function openModal(modalId){ 
+      document.getElementById(modalId).classList.remove('hidden'); 
   }
 
-  function loadUserCourses(userId){
-      fetch('api/get_user_courses.php?user_id=' + userId)
-          .then(res => res.json())
-          .then(data => {
-              const tbody = document.getElementById('userCoursesTableBody');
-              tbody.innerHTML = '';
-              if(data.length > 0){
-                  data.forEach(course => {
-                      tbody.innerHTML += `
-                          <tr class="hover:bg-gray-100">
-                              <td class="px-4 py-2 border-r">${course.name}</td>
-                              <td class="px-4 py-2 flex gap-2">
-                                  <a href="users_back/delete_user_course.php?id=${course.id}" 
-                                    onclick="return confirm('¿Seguro de eliminar este curso?')" 
-                                    class="text-red-600 hover:text-red-800 bg-red-100 px-3 py-1 rounded text-sm">Eliminar</a>
-                              </td>
-                          </tr>`;
-                  });
-              } else {
-                  tbody.innerHTML = `<tr><td colspan="2" class="px-4 py-2 text-center text-gray-500">No hay cursos asignados</td></tr>`;
-              }
-          });
+  function closeModal(modalId){ 
+      document.getElementById(modalId).classList.add('hidden'); 
   }
-
-  // Agregar curso via fetch para actualizar tabla sin recargar
-  document.getElementById('addUserCourseForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const userId = document.getElementById('courseUserId').value;
-      const courseId = document.getElementById('selectCourse').value;
-      if(!courseId) return;
-
-      fetch('users_back/add_user_course.php', {
-          method: 'POST',
-          headers: {'Content-Type':'application/x-www-form-urlencoded'},
-          body: `user_id=${encodeURIComponent(userId)}&course_id=${encodeURIComponent(courseId)}`
-      })
-      .then(res => res.text())
-      .then(res => {
-          document.getElementById('selectCourse').value = '';
-          loadUserCourses(userId);
-      });
-  });
-  // 🔹 Abrir / cerrar modales
-  function openModal(modalId){ document.getElementById(modalId).classList.remove('hidden'); }
-  function closeModal(modalId){ document.getElementById(modalId).classList.add('hidden'); }
 
   function openEditModalUser(user){
     document.getElementById('edit_user_id').value = user.user_id;
@@ -208,7 +123,6 @@ try {
     document.getElementById('edit_role').value = user.role_id;
     openModal('editUserModal');
   }
-
 
   // Validación duplicados emails
   async function checkDuplicateEmail(email, excludeId = null){
@@ -248,4 +162,3 @@ try {
     });
   }
 </script>
-
