@@ -33,8 +33,8 @@ try {
         <img src="assets\img\logosiablack.png" alt="Deportivo Patagones" class="sidebar-logo sidebar-title" style="height:31px;">
         <span class="font-semibold sidebar-title-collapsed hidden flex space-x-0 px-0 m-1">
             <span style="color:white; display:inline-block;">S</span>
-            <span style="color:white; display:inline-block;">I</span>
-            <span style="color:white; display:inline-block;">A</span>
+            <span style="color:white; display:inline-block;">G</span>
+            <span style="color:white; display:inline-block;">T</span>
         </span>
     </div>
 
@@ -51,19 +51,19 @@ try {
                 </a>
                 <?php endif; ?>
                 
-                <!-- SECCIÓN DOCENTES -->
+                <!-- ABM Datos -->
                 <?php 
-                $teacher_pages = ['attendance_teacher.php','teacher_courses.php','teacher_reports.php','attendance_reports_list_teacher.php'];
-                $has_teacher_section = false;
-                foreach($teacher_pages as $page) {
-                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_teacher_section = true; break; }
+                $ABM_pages = ['attendance_teacher.php','teacher_courses.php','teacher_reports.php','attendance_reports_list_teacher.php'];
+                $has_ABM = false;
+                foreach($ABM_pages as $page) {
+                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_ABM = true; break; }
                 }
                 ?>
-                <?php if($has_teacher_section): ?>
+                <?php if($has_ABM): ?>
                 <div class="pt-5 pb-1 border-t border-gray-700/50 mt-4">
                     <button class="flex items-center nav-item px-3 w-full text-left text-gray-400 text-xs font-semibold uppercase tracking-wider accordion-btn">
                         <i class="fas fa-user-tie w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">DOCENTES</span>
+                        <span class="sidebar-text">ABM Datos</span>
                         <i class="fas fa-chevron-down ml-auto w-3 h-3 accordion-icon"></i>
                     </button>
                 </div>
@@ -71,47 +71,47 @@ try {
                     <?php if(isset($permissions['attendance_teacher.php']) && in_array('view', $permissions['attendance_teacher.php'])): ?>
                     <a href="attendance_teacher.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-clipboard-user w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Tomar Asistencia</span>
+                        <span class="sidebar-text">Productos</span>
                     </a>
                     <?php endif; ?>
 
                     <?php if(isset($permissions['attendance_reports_list_teacher.php']) && in_array('view', $permissions['attendance_reports_list_teacher.php'])): ?>
                     <a href="attendance_reports_list_teacher.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-list-check w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Lista de Reportes</span>
+                        <span class="sidebar-text">Categorias</span>
                     </a>
                     <?php endif; ?>
 
                     <?php if(isset($permissions['teacher_reports.php']) && in_array('view', $permissions['teacher_reports.php'])): ?>
                     <a href="teacher_reports.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-file-lines w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Mis Reportes</span>
+                        <span class="sidebar-text">Clientes</span>
                     </a>
                     <?php endif; ?>
 
                     <?php if(isset($permissions['teacher_courses.php']) && in_array('view', $permissions['teacher_courses.php'])): ?>
                     <a href="teacher_courses.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-book-open-reader w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Mis Cursos</span>
+                        <span class="sidebar-text">Proveedores</span>
                     </a>
                     <?php endif; ?>
 
                 </div>
                 <?php endif; ?>
 
-                <!-- ASISTENCIAS -->
+                <!-- Clientes -->
                 <?php 
-                $attendance_pages = ['attendance.php','attendance_report.php','student_attendance.php','teachers_attendance.php','attendance_reports_list.php','course_attendance.php'];
-                $has_attendance = false;
-                foreach($attendance_pages as $page) {
-                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_attendance = true; break; }
+                $customers_pages = ['attendance.php','attendance_report.php','student_attendance.php','teachers_attendance.php','attendance_reports_list.php','course_attendance.php'];
+                $has_customers = false;
+                foreach($customers_pages as $page) {
+                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_customers = true; break; }
                 }
                 ?>
-                <?php if($has_attendance): ?>
+                <?php if($has_customers): ?>
                 <div class="pt-5 pb-1 border-t border-gray-700/50 mt-4">
                     <button class="flex items-center nav-item px-3 w-full text-left text-gray-400 text-xs font-semibold uppercase tracking-wider accordion-btn">
                         <i class="fas fa-clipboard-user w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">ASISTENCIAS</span>
+                        <span class="sidebar-text">Clientes</span>
                         <i class="fas fa-chevron-down ml-auto w-3 h-3 accordion-icon"></i>
                     </button>
                 </div>
@@ -119,55 +119,49 @@ try {
                     <?php if(isset($permissions['attendance.php']) && in_array('view', $permissions['attendance.php'])): ?>
                     <a href="attendance.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-check-square w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Toma de Asistencia</span>
+                        <span class="sidebar-text">Ventas</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['attendance_reports_list.php']) && in_array('view', $permissions['attendance_reports_list.php'])): ?>
                     <a href="attendance_reports_list.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-list-ul w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Listado de Reportes</span>
+                        <span class="sidebar-text">Devolución</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['attendance_report.php']) && in_array('view', $permissions['attendance_report.php'])): ?>
                     <a href="attendance_report.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-file-lines w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Consulta de Reporte</span>
+                        <span class="sidebar-text">Cobranza</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['student_attendance.php']) && in_array('view', $permissions['student_attendance.php'])): ?>
                     <a href="student_attendance.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-user-graduate w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Consulta Estudiante</span>
+                        <span class="sidebar-text">Saldos</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['teachers_attendance.php']) && in_array('view', $permissions['teachers_attendance.php'])): ?>
                     <a href="teachers_attendance.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-person-chalkboard w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Consulta Docentes</span>
-                    </a>
-                    <?php endif; ?>
-                    <?php if(isset($permissions['course_attendance.php']) && in_array('view', $permissions['course_attendance.php'])): ?>
-                    <a href="course_attendance.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                        <i class="fas fa-users w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Consulta Curso</span>
+                        <span class="sidebar-text">Fichero</span>
                     </a>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
 
-                <!-- Gestión -->
+                <!-- Proveedores -->
                 <?php 
-                $gestion_pages = ['teachers.php','students.php','courses.php','subjects.php','schedules.php','classrooms.php'];
-                $has_gestion = false;
-                foreach($gestion_pages as $page) {
-                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_gestion = true; break; }
+                $suppliers_pages = ['teachers.php','students.php','courses.php','subjects.php','schedules.php','classrooms.php'];
+                $has_suppliers = false;
+                foreach($suppliers_pages as $page) {
+                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_suppliers = true; break; }
                 }
                 ?>
-                <?php if($has_gestion): ?>
+                <?php if($has_suppliers): ?>
                 <div class="pt-5 pb-1 border-t border-gray-700/50 mt-4">
                     <button class="flex items-center nav-item px-3 w-full text-left text-gray-400 text-xs font-semibold uppercase tracking-wider accordion-btn">
                         <i class="fas fa-gears w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">GESTIÓN</span>
+                        <span class="sidebar-text">Proveedores</span>
                         <i class="fas fa-chevron-down ml-auto w-3 h-3 accordion-icon"></i>
                     </button>
                 </div>
@@ -175,43 +169,101 @@ try {
                     <?php if(isset($permissions['teachers.php']) && in_array('view', $permissions['teachers.php'])): ?>
                     <a href="teachers.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-person-chalkboard w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Docentes</span>
+                        <span class="sidebar-text">Compras</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['courses.php']) && in_array('view', $permissions['courses.php'])): ?>
                     <a href="courses.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-layer-group w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Cursos</span>
+                        <span class="sidebar-text">Devolución</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['positions.php']) && in_array('view', $permissions['positions.php'])): ?>
                     <a href="positions.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-book-open-reader w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">CUPOF</span>
+                        <span class="sidebar-text">Cobranza</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['subjects.php']) && in_array('view', $permissions['subjects.php'])): ?>
                     <a href="subjects.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-book-open-reader w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Materias</span>
+                        <span class="sidebar-text">Saldos</span>
                     </a>
                     <?php endif; ?>
                     <?php if(isset($permissions['students.php']) && in_array('view', $permissions['students.php'])): ?>
                     <a href="students.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-user-graduate w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Estudiante</span>
+                        <span class="sidebar-text">Fichero</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(isset($permissions['classrooms.php']) && in_array('view', $permissions['classrooms.php'])): ?>
-                    <a href="classrooms.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                        <i class="fas fa-school-flag w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Aulas</span>
+                </div>
+                <?php endif; ?>
+
+                <!-- Stock -->
+                <?php 
+                $stock_pages = ['teachers.php','students.php','courses.php','subjects.php','schedules.php','classrooms.php'];
+                $has_stock = false;
+                foreach($stock_pages as $page) {
+                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_stock = true; break; }
+                }
+                ?>
+                <?php if($has_stock): ?>
+                <div class="pt-5 pb-1 border-t border-gray-700/50 mt-4">
+                    <button class="flex items-center nav-item px-3 w-full text-left text-gray-400 text-xs font-semibold uppercase tracking-wider accordion-btn">
+                        <i class="fas fa-gears w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Stock</span>
+                        <i class="fas fa-chevron-down ml-auto w-3 h-3 accordion-icon"></i>
+                    </button>
+                </div>
+                <div class="space-y-1 accordion-content">
+                    <?php if(isset($permissions['teachers.php']) && in_array('view', $permissions['teachers.php'])): ?>
+                    <a href="teachers.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                        <i class="fas fa-person-chalkboard w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Salidas</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(isset($permissions['schedules.php']) && in_array('view', $permissions['schedules.php'])): ?>
-                    <a href="schedules.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                        <i class="fas fa-calendar-days w-4 h-4 mr-3"></i>
-                        <span class="sidebar-text">Horarios</span>
+                    <?php if(isset($permissions['courses.php']) && in_array('view', $permissions['courses.php'])): ?>
+                    <a href="courses.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                        <i class="fas fa-layer-group w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Stock</span>
+                    </a>
+                    <?php endif; ?>
+                    <?php if(isset($permissions['positions.php']) && in_array('view', $permissions['positions.php'])): ?>
+                    <a href="positions.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                        <i class="fas fa-book-open-reader w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">A Reponer</span>
+                    </a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+                <!-- Caja -->
+                <?php 
+                $box_pages = ['teachers.php','students.php','courses.php','subjects.php','schedules.php','classrooms.php'];
+                $has_box = false;
+                foreach($box_pages as $page) {
+                    if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_box = true; break; }
+                }
+                ?>
+                <?php if($has_box): ?>
+                <div class="pt-5 pb-1 border-t border-gray-700/50 mt-4">
+                    <button class="flex items-center nav-item px-3 w-full text-left text-gray-400 text-xs font-semibold uppercase tracking-wider accordion-btn">
+                        <i class="fas fa-gears w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Caja</span>
+                        <i class="fas fa-chevron-down ml-auto w-3 h-3 accordion-icon"></i>
+                    </button>
+                </div>
+                <div class="space-y-1 accordion-content">
+                    <?php if(isset($permissions['teachers.php']) && in_array('view', $permissions['teachers.php'])): ?>
+                    <a href="teachers.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                        <i class="fas fa-person-chalkboard w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Caja</span>
+                    </a>
+                    <?php endif; ?>
+                    <?php if(isset($permissions['courses.php']) && in_array('view', $permissions['courses.php'])): ?>
+                    <a href="courses.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                        <i class="fas fa-layer-group w-4 h-4 mr-3"></i>
+                        <span class="sidebar-text">Contaduría</span>
                     </a>
                     <?php endif; ?>
                 </div>
@@ -219,7 +271,7 @@ try {
 
                 <!-- Administrador -->
                 <?php 
-                $admin_pages = ['users.php','roles.php','attendance_report_admin.php','backup.php'];
+                $admin_pages = ['users.php','roles.php','backup.php'];
                 $has_admin = false;
                 foreach($admin_pages as $page) {
                     if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_admin = true; break; }
@@ -245,27 +297,6 @@ try {
                 <a href="users.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                     <i class="fas fa-users-gear w-4 h-4 mr-3"></i>
                     <span class="sidebar-text">Usuarios</span>
-                </a>
-                <?php endif; ?>
-
-                <?php if(isset($permissions['attendance_reports_list_admin.php']) && in_array('view', $permissions['attendance_reports_list_admin.php'])): ?>
-                <a href="attendance_reports_list_admin.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                    <i class="fas fa-magnifying-glass-chart w-4 h-4 mr-3"></i>
-                    <span class="sidebar-text">Listado De Reportes</span>
-                </a>
-                <?php endif; ?>
-
-                <?php if(isset($permissions['attendance_report_admin.php']) && in_array('view', $permissions['attendance_report_admin.php'])): ?>
-                <a href="attendance_report_admin.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                    <i class="fas fa-user-check w-4 h-4 mr-3"></i>
-                    <span class="sidebar-text">Registros Preceptor</span>
-                </a>
-                <?php endif; ?>
-
-                <?php if(isset($permissions['attendance_reports_admin_teachers.php']) && in_array('view', $permissions['attendance_reports_admin_teachers.php'])): ?>
-                <a href="attendance_reports_admin_teachers.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
-                    <i class="fas fa-chalkboard-user w-4 h-4 mr-3"></i>
-                    <span class="sidebar-text">Registros Docente</span>
                 </a>
                 <?php endif; ?>
 

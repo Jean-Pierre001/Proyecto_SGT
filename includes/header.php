@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     <?php echo isset($page_title)
-      ? htmlspecialchars($page_title) . ' | SIA'
-      : 'SIA - Panel de Administración'; ?>
+      ? htmlspecialchars($page_title) . ' | SGT'
+      : 'SGT - Panel de Administración'; ?>
   </title>
   
   <!-- Fonts -->
