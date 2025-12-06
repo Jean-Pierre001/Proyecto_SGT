@@ -68,15 +68,15 @@ try {
                     </button>
                 </div>
                 <div class="space-y-1 accordion-content max-h-0 overflow-hidden transition-all duration-500">
-                    <?php if(isset($permissions['attendance_teacher.php']) && in_array('view', $permissions['attendance_teacher.php'])): ?>
-                    <a href="attendance_teacher.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                    <?php if(isset($permissions['products.php']) && in_array('view', $permissions['products.php'])): ?>
+                    <a href="products.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-clipboard-user w-4 h-4 mr-3"></i>
                         <span class="sidebar-text">Productos</span>
                     </a>
                     <?php endif; ?>
 
-                    <?php if(isset($permissions['attendance_reports_list_teacher.php']) && in_array('view', $permissions['attendance_reports_list_teacher.php'])): ?>
-                    <a href="attendance_reports_list_teacher.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                    <?php if(isset($permissions['categories.php']) && in_array('view', $permissions['categories.php'])): ?>
+                    <a href="categories.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-list-check w-4 h-4 mr-3"></i>
                         <span class="sidebar-text">Categorias</span>
                     </a>
@@ -201,7 +201,7 @@ try {
 
                 <!-- Stock -->
                 <?php 
-                $stock_pages = ['teachers.php','students.php','courses.php','subjects.php','schedules.php','classrooms.php'];
+                $stock_pages = ['teachers.php','students.php','courses.php','subjects.php','stock.php','classrooms.php'];
                 $has_stock = false;
                 foreach($stock_pages as $page) {
                     if(isset($permissions[$page]) && in_array('view', $permissions[$page])) { $has_stock = true; break; }
@@ -222,8 +222,8 @@ try {
                         <span class="sidebar-text">Salidas</span>
                     </a>
                     <?php endif; ?>
-                    <?php if(isset($permissions['courses.php']) && in_array('view', $permissions['courses.php'])): ?>
-                    <a href="courses.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
+                    <?php if(isset($permissions['stock.php']) && in_array('view', $permissions['stock.php'])): ?>
+                    <a href="stock.php" class="flex items-center nav-item px-3 rounded-lg text-gray-300 hover:bg-nav-item-hover/70 text-sm">
                         <i class="fas fa-layer-group w-4 h-4 mr-3"></i>
                         <span class="sidebar-text">Stock</span>
                     </a>

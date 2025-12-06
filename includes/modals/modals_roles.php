@@ -92,12 +92,12 @@
           <div class="ml-8 mt-2 text-sm space-y-2 text-gray-700">
 
             <label class="flex items-center gap-2">
-              <input type="checkbox" name="permissions[]" value="attendance_teacher.php:view" class="child-abm accent-blue-600">
+              <input type="checkbox" name="permissions[]" value="products.php:view" class="child-abm accent-blue-600">
               Productos
             </label>
 
             <label class="flex items-center gap-2">
-              <input type="checkbox" name="permissions[]" value="attendance_reports_list_teacher.php:view" class="child-abm accent-blue-600">
+              <input type="checkbox" name="permissions[]" value="categories.php:view" class="child-abm accent-blue-600">
               Categorías
             </label>
 
@@ -211,7 +211,7 @@
             </label>
 
             <label class="flex items-center gap-2">
-              <input type="checkbox" name="permissions[]" value="courses.php:view" class="child-stock">
+              <input type="checkbox" name="permissions[]" value="stock.php:view" class="child-stock">
               Stock
             </label>
 
